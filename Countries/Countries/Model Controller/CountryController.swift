@@ -35,6 +35,7 @@ class CountryController {
                 let decoder = JSONDecoder()
                 let countries = try decoder.decode([Country].self, from: data)
                 self.countries = countries
+                completion(nil)
             } catch {
                 NSLog("Error decoding: \(error)")
                 completion(error)

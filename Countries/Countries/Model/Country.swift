@@ -25,7 +25,7 @@ struct Country: Decodable {
         case population
         case currencies
         case languages
-        case alpha3code
+        case alpha3Code
         
         enum CurrenciesCodingKeys: String, CodingKey {
             case name
@@ -64,7 +64,7 @@ struct Country: Decodable {
         }
         
         
-        let alpha3Code = try container.decode(String.self, forKey: .alpha3code)
+        let alpha3Code = try container.decode(String.self, forKey: .alpha3Code)
         
         self.name = name
         self.region = region
