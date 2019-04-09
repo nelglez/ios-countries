@@ -18,12 +18,14 @@ class CountryListTableViewController: UITableViewController, UISearchBarDelegate
         super.viewDidLoad()
 
         searchBar.delegate = self
-       
+    
+        tableView.tableFooterView = UIView()
+    
     }
     
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.searchBar.endEditing(true)
-        
+
          guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
         
         countryController.fetchCountries(searchTerm: searchTerm) { (error) in
@@ -32,8 +34,9 @@ class CountryListTableViewController: UITableViewController, UISearchBarDelegate
             }
             
             DispatchQueue.main.async {
-                
+                self.searchBar.endEditing(true)
                 self.tableView.reloadData()
+                self.searchBar.text = nil
             }
         }
         
@@ -65,7 +68,11 @@ class CountryListTableViewController: UITableViewController, UISearchBarDelegate
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if segue.identifier == "toDetailVC" {
+            let destinationVC = segue.destination as? CountryDetailViewController
+            guard let indexPath = tableView.indexPathForSelectedRow else {return}
+            destinationVC?.countries = countryController.countries[indexPath.row]
+        }
     }
    
 

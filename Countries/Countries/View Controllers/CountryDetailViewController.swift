@@ -9,22 +9,32 @@
 import UIKit
 
 class CountryDetailViewController: UIViewController {
+    @IBOutlet weak var flagImageView: UIImageView!
+    @IBOutlet weak var countryNameLabel: UILabel!
+    @IBOutlet weak var capitalLabel: UILabel!
+    @IBOutlet weak var populationLabel: UILabel!
+    
+    var countries: Country? {
+        didSet {
+            updateViews()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        updateViews()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func updateViews() {
+        guard let countries = countries, isViewLoaded else {return}
+        
+        countryNameLabel.text = countries.name
+        capitalLabel.text = "Capital: \(countries.capital)"
+        populationLabel.text = "Population: \(countries.population)"
+        flagImageView.image = UIImage(named: countries.flagName)
     }
-    */
+
+    
 
 }
